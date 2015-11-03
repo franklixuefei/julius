@@ -64,6 +64,8 @@ extern "C" {
 /* net/rdwt.c */
 int rd(int fd, char *data, int *len, int maxlen);
 int wt(int fd, char *data, int len);
+// Frank
+int wt_raw(int fd, char *data, int len);
 /* net/server_client.c */
 int ready_as_server(int port_num);
 int accept_from(int sd);

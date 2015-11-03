@@ -60,7 +60,10 @@
 #include <sent/tcpip.h>
 
 static int adinnet_sd = -1;	///< Listen socket for adinserv
-static int adinnet_asd = -1;	///< Accept socket for adinserv
+
+// Frank: changed from static int adinnet_asd = -1 to int adinnet_asd = -1
+// Frank: becuase we want to access it elsewhere.
+int adinnet_asd = -1;	///< Accept socket for adinserv
 
 #ifdef FORK_ADINNET
 static pid_t child;		/* child process ID (0 if myself is child) */
@@ -185,7 +188,6 @@ adin_tcpip_read(SP16 *buf, int sampnum)
   fd_set rfds;
   struct timeval tv;
   int status;
-
   /* check if some commands are waiting in queue */
   FD_ZERO(&rfds);
   FD_SET(adinnet_asd, &rfds);

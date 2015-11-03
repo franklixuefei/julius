@@ -92,7 +92,7 @@ rd(int fd, char *data, int *len, int maxlen)
  *
  * @param fd [in] file descriptor
  * @param data [in] buffer that holds data to write
- * @param len [out] received length in bytes
+ * @param len [in] length in bytes to send
  * 
  * @return actually written data length in bytes, or -1 on error.
  */
@@ -126,6 +126,39 @@ wt(int fd, char *data, int len)
 	 write(fd,data,len)
 #endif
 	 ) < 0) {
+      jlog("Error: rdwt: failed to write data (%d bytes)\n",len);
+      return(-1);
+    }
+  } else {
+    tmpbytes = 0;
+  }
+  return(tmpbytes);
+}
+
+
+// Frank:
+/** 
+ * @brief Write a raw data segment to a network stream
+ *
+ * @param fd [in] file descriptor
+ * @param data [in] buffer that holds data to write
+ * @param len [in] length in bytes to send
+ * 
+ * @return actually written data length in bytes, or -1 on error.
+ */
+int
+wt_raw(int fd, char *data, int len)
+{
+  int tmpbytes;
+
+  if (len > 0) {
+    if ((tmpbytes=
+#ifdef WINSOCK
+   send(fd,data,len,0)
+#else
+   write(fd,data,len)
+#endif
+   ) < 0) {
       jlog("Error: rdwt: failed to write data (%d bytes)\n",len);
       return(-1);
     }

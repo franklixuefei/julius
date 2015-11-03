@@ -43,3 +43,7 @@ void outfile_set_fname(char *input_filename);
 void record_add_option();
 void record_setup(Recog *recog, void *data);
 
+/* Frank: output_adinnet.c */
+void setup_output_adinnet(Recog *recog, void *data);
+void adinnet_add_option();
+boolean write_output_to_adinnet();

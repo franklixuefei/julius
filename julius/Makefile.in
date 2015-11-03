@@ -35,6 +35,7 @@ INSTALL_DATA=@INSTALL_DATA@
 INSTALL_PROGRAM=@INSTALL_PROGRAM@
 
 ############################################################
+# Frank: added output_adinnet.o
 
 TARGET = julius@EXEEXT@
 INSTALLTARGET = julius@EXEEXT@
@@ -47,6 +48,7 @@ output_module.o \
 output_stdout.o \
 output_file.o \
 record.o \
+output_adinnet.o \
 @CCOBJ@
 
 ############################################################

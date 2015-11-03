@@ -95,6 +95,8 @@ main(int argc, char *argv[])
   /* add application options */
   record_add_option();
   module_add_option();
+  // Frank: add option to be able to output to adinnet socket.
+  adinnet_add_option();
   charconv_add_option();
   j_add_option("-separatescore", 0, 0, "output AM and LM scores separately", opt_separatescore);
   j_add_option("-logfile", 1, 1, "output log to file", opt_logfile);
@@ -174,6 +176,10 @@ main(int argc, char *argv[])
   } else {
     /* register result output callback functions to stdout */
     setup_output_tty(recog, NULL);
+    // Frank: register result output callback functions to adinnet socket.
+    if (write_output_to_adinnet()) {
+      setup_output_adinnet(recog, NULL);
+    }
   }
   /* if -outfile option specified, callbacks for file output will be
      regitered */
@@ -195,6 +201,8 @@ main(int argc, char *argv[])
   /* initialize and standby the specified audio input source */
   /* for microphone or other threaded input, ad-in thread starts here */
   if (j_adin_init(recog) == FALSE) return -1;
+
+  fprintf(stderr, "current thread pid: %d\n", getpid());
 
   /* output system information to log */
   j_recog_info(recog);
