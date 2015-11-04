@@ -257,12 +257,15 @@ result_pass2(Recog *recog, void *dummy)
   pos = 0;
   pos += sprintf(&buf[pos], "{\"processes\":[");
   for(r=recog->process_list;r;r=r->next) {
-    if (! r->live) continue;
+    if (!r->live) continue;
+    if (r->config->successive.enabled && r->result.status < 0 && r->config->output.progout_flag) continue;
+    if (r->result.status < 0) continue;
     pos += sprintf(&buf[pos], "{\"sentences\":[");
     winfo = r->lm->winfo;
     num = r->result.sentnum;
 
     for(n=0;n<num;n++) {
+      if (r->config->successive.enabled && r->config->output.progout_flag) break;
       pos += sprintf(&buf[pos], "[");
       s = &(r->result.sent[n]);
       seq = s->word;
