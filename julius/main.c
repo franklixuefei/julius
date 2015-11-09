@@ -30,6 +30,7 @@ boolean outfile_enabled = FALSE;
 
 static char *logfile = NULL;
 static boolean nolog = FALSE;
+extern int adinnet_asd;
 
 /************************************************************************/
 /**
@@ -178,7 +179,12 @@ main(int argc, char *argv[])
     setup_output_tty(recog, NULL);
     // Frank: register result output callback functions to adinnet socket.
     if (write_output_to_adinnet()) {
-      setup_output_adinnet(recog, NULL);
+      if (adinnet_asd != -1) {
+        setup_output_adinnet(recog, NULL);
+      } else {
+        fprintf(stderr, "Warning: -adinnetout ignored because the input device is not adinnet.\n");
+      }
+      
     }
   }
   /* if -outfile option specified, callbacks for file output will be
