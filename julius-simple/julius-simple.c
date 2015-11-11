@@ -69,8 +69,10 @@ output_result(Recog *recog, void *dummy)
   buf[pos] = '\0';
 
   // flush to stderr for easier capture
-  fprintf(stderr, "%s\n", buf);
+  fprintf(stderr, "%s ", buf);
   fflush(stderr);
+  fprintf(stdout, "\n");
+  fflush(stdout);
 }
 
 static boolean
