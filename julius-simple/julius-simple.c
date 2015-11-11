@@ -1,5 +1,5 @@
 #include <julius/juliuslib.h>
-static char *infilename = "";
+static char *infilename = NULL;
 /** 
  * Callback to output final recognition result.
  * This function will be called just after recognition of an input ends
@@ -68,9 +68,9 @@ output_result(Recog *recog, void *dummy)
   pos += sprintf(&buf[pos], "]}");
   buf[pos] = '\0';
 
-  // writes the data to the socket.
-  printf("%s\n", buf);
-  fflush(stdout);
+  // flush to stderr for easier capture
+  fprintf(stderr, "%s\n", buf);
+  fflush(stderr);
 }
 
 static boolean
@@ -192,11 +192,7 @@ main(int argc, char *argv[])
 
   } else {
     /* raw speech input (microphone, stdin, file etc.) */
-    char *input_file = NULL;
-    if (infilename[0] != '\0') {
-      input_file = infilename;
-    }
-    switch(j_open_stream(recog, input_file)) {
+    switch(j_open_stream(recog, infilename)) {
     case 0:			/* succeeded */
       break;
     case -1:      		/* error */
