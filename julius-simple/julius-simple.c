@@ -31,12 +31,12 @@ output_result(Recog *recog, void *dummy)
 
     for(n=0;n<num;n++) {
       if (r->config->successive.enabled && r->config->output.progout_flag) break;
-      pos += sprintf(&buf[pos], "[");
       s = &(r->result.sent[n]);
       seq = s->word;
       seqnum = s->word_num;
       
       int i;
+      pos += sprintf(&buf[pos], "{\"words\":[");
       for (i = 0; i < seqnum; ++i) {
         pos += sprintf(&buf[pos], "{");
         pos += sprintf(&buf[pos], "\"word\":");
@@ -61,7 +61,7 @@ output_result(Recog *recog, void *dummy)
           pos += sprintf(&buf[pos], ",");
         }
       }
-      pos += sprintf(&buf[pos], "]");
+      pos += sprintf(&buf[pos], "]}");
     }
     pos += sprintf(&buf[pos], "]}");
   }
