@@ -1,5 +1,5 @@
 #include <julius/juliuslib.h>
-
+static char *infilename = "";
 /** 
  * Callback to output final recognition result.
  * This function will be called just after recognition of an input ends
@@ -73,7 +73,13 @@ output_result(Recog *recog, void *dummy)
   fflush(stdout);
 }
 
-
+static boolean
+opt_infile(Jconf *jconf, char *arg[], int argnum)
+{
+  infilename = arg[0];
+  printf("Frank: input filename: %s\n", infilename);
+  return TRUE;
+}
 /**
  * Main function
  * 
@@ -116,6 +122,8 @@ main(int argc, char *argv[])
     fprintf(stderr, "Try '-help' for run time options.\n");
     return -1;
   }
+
+  j_add_option("-infile", 1, 1, "input sound file", opt_infile);
 
   /************/
   /* Start up */
@@ -185,9 +193,12 @@ main(int argc, char *argv[])
     }
 
   } else {
-    /* raw speech input (microphone etc.) */
-
-    switch(j_open_stream(recog, NULL)) {
+    /* raw speech input (microphone, stdin, file etc.) */
+    char *input_file = NULL;
+    if (infilename[0] != '\0') {
+      input_file = infilename;
+    }
+    switch(j_open_stream(recog, input_file)) {
     case 0:			/* succeeded */
       break;
     case -1:      		/* error */
