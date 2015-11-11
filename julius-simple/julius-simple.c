@@ -150,8 +150,6 @@ main(int argc, char *argv[])
   /* Register callback */
   /*********************/
   /* register result callback functions */
-  // callback_add(recog, CALLBACK_EVENT_SPEECH_READY, status_recready, NULL);
-  // callback_add(recog, CALLBACK_EVENT_SPEECH_START, status_recstart, NULL);
   callback_add(recog, CALLBACK_RESULT, output_result, NULL);
 
   /**************************/
