@@ -1,0 +1,16 @@
+SOURCEFORMAT=WAV 
+SOURCEKIND=WAVEFORM 
+SOURCERATE = 625    # surce sampling frequency is 16k [kHz]
+TARGETKIND = FBANK
+TARGETRATE=100000.0 # frame interval is 10 [msec]
+SAVECOMPRESSED=F    # set T, if you like to save disk storage
+SAVEWITHCRC=F       
+WINDOWSIZE=250000.0 # window length is 25 [msec]
+USEHAMMING=T        # use HAMMING window
+PREEMCOEF=0.97      # apply highpass filtering
+NUMCHANS=40         # # of filterbank for MFCC is 24
+ZMEANSOURCE=T
+##CEPLIFTER=22
+##NUMCEPS=40          # # of parameters for MFCC presentation
+##ENORMALISE=T
+##ESCALE=1.0
